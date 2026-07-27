@@ -13,6 +13,7 @@ export default function FlashCard({
   question,
   answer,
   flipped,
+  darkMode,
   onFlip,
 }: Props) {
   async function copyText() {
@@ -48,8 +49,8 @@ export default function FlashCard({
             position: "absolute",
             inset: 0,
             borderRadius: 24,
-            background: "#ffffff",
-            border: "1px solid #e2e8f0",
+            background: darkMode ? "#111827" : "#ffffff",
+            border: darkMode ? "1px solid #334155" : "1px solid #e2e8f0",
             boxShadow: "0 10px 30px rgba(0,0,0,.08)",
             backfaceVisibility: "hidden",
             padding: 30,
@@ -61,7 +62,7 @@ export default function FlashCard({
           <div>
             <small
               style={{
-                color: "#2563eb",
+                color: darkMode ? "#60a5fa" : "#2563eb",
                 fontWeight: 700,
                 letterSpacing: 1,
               }}
@@ -72,7 +73,7 @@ export default function FlashCard({
             <h2
               style={{
                 marginTop: 16,
-                color: "#0f172a",
+                color: darkMode ? "#f8fafc" : "#0f172a",
                 lineHeight: 1.5,
               }}
             >

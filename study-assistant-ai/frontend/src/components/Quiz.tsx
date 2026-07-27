@@ -29,6 +29,7 @@ export default function Quiz({
   onSelect,
   onNext,
   onPrevious,
+  darkMode,
 }: Props) {
   if (!quiz.length) return null;
 
@@ -65,7 +66,7 @@ export default function Quiz({
           <h2
             style={{
               margin: 0,
-              color: "#0f172a",
+              color: darkMode ? "#f8fafc" : "#0f172a",
             }}
           >
             Quiz
@@ -74,7 +75,7 @@ export default function Quiz({
           <p
             style={{
               margin: "6px 0 0",
-              color: "#64748b",
+              color: darkMode ? "#cbd5e1" : "#64748b",
             }}
           >
             Question {currentIndex + 1} of {quiz.length}
@@ -86,7 +87,7 @@ export default function Quiz({
             display: "flex",
             alignItems: "center",
             gap: 8,
-            color: "#2563eb",
+            color: darkMode ? "#60a5fa" : "#2563eb",
             fontWeight: 700,
           }}
         >
@@ -120,7 +121,7 @@ export default function Quiz({
 
       <div
         style={{
-          background: "#ffffff",
+          background: darkMode ? "#111827" : "#ffffff",
           borderRadius: 18,
           padding: "24px",
           boxShadow: "0 6px 20px rgba(0,0,0,.08)",
@@ -129,7 +130,7 @@ export default function Quiz({
         <h3
           style={{
             marginTop: 0,
-            color: "#0f172a",
+            color: darkMode ? "#f8fafc" : "#0f172a",
             lineHeight: 1.6,
           }}
         >
@@ -150,8 +151,8 @@ export default function Quiz({
             const isSelected =
               option === selectedAnswer;
 
-            let background = "#ffffff";
-            let border = "2px solid #cbd5e1";
+            let background = darkMode ? "#1f2937" : "#ffffff";
+            let border = darkMode ? "2px solid #475569" : "2px solid #cbd5e1";
 
             if (answered) {
               if (isCorrect) {
@@ -183,6 +184,7 @@ export default function Quiz({
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  color: darkMode ? "#f8fafc" : "#0f172a",
                 }}
               >
                 {option}
@@ -218,6 +220,7 @@ export default function Quiz({
               background: correct
                 ? "#dcfce7"
                 : "#fee2e2",
+              color: darkMode ? "#020617" : "#0f172a",
             }}
           >
             <strong>
@@ -259,7 +262,8 @@ export default function Quiz({
             padding: 14,
             borderRadius: 12,
             border: "none",
-            background: "#e2e8f0",
+            background: darkMode ? "#334155" : "#e2e8f0",
+            color: darkMode ? "#f8fafc" : "#0f172a",
             cursor: "pointer",
             display: "flex",
             justifyContent: "center",

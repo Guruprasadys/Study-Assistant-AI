@@ -67,13 +67,13 @@ export default function FlashCardList({
             gap: "10px",
           }}
         >
-          <BookOpen color="#2563eb" size={24} />
+          <BookOpen color={darkMode ? "#60a5fa" : "#2563eb"} size={24} />
 
           <div>
             <h2
               style={{
                 margin: 0,
-                color: "#0f172a",
+                color: darkMode ? "#f8fafc" : "#0f172a",
               }}
             >
               Flashcards
@@ -82,7 +82,7 @@ export default function FlashCardList({
             <p
               style={{
                 margin: 0,
-                color: "#64748b",
+                color: darkMode ? "#cbd5e1" : "#64748b",
               }}
             >
               Card {currentIndex + 1} of {cards.length}
@@ -159,7 +159,8 @@ export default function FlashCardList({
             padding: "14px",
             borderRadius: 14,
             border: "none",
-            background: "#e2e8f0",
+            background: darkMode ? "#334155" : "#e2e8f0",
+            color: darkMode ? "#f8fafc" : "#0f172a",
             cursor: "pointer",
             display: "flex",
             justifyContent: "center",

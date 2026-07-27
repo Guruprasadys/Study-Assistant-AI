@@ -1,0 +1,30 @@
+{
+  "name": "study-assistant-backend",
+  "version": "2.0.0",
+  "description": "Study Assistant AI Backend using Azure OpenAI",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "study-assistant",
+    "azure-openai",
+    "express",
+    "ai"
+  ],
+  "author": "Guruprasad",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.0",
+    "openai": "^5.23.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

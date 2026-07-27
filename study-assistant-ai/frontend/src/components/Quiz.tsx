@@ -1,0 +1,298 @@
+import {
+  CheckCircle2,
+  XCircle,
+  ChevronLeft,
+  ChevronRight,
+  Trophy,
+} from "lucide-react";
+
+interface QuizItem {
+  question: string;
+  options: string[];
+  correctAnswer: string;
+}
+
+interface Props {
+  quiz: QuizItem[];
+  currentIndex: number;
+  selectedAnswer: string;
+  onSelect: (answer: string) => void;
+  onNext: () => void;
+  onPrevious: () => void;
+  darkMode:boolean;
+}
+
+export default function Quiz({
+  quiz,
+  currentIndex,
+  selectedAnswer,
+  onSelect,
+  onNext,
+  onPrevious,
+}: Props) {
+  if (!quiz.length) return null;
+
+  const currentQuestion = quiz[currentIndex];
+
+  const answered = selectedAnswer !== "";
+
+  const correct =
+    selectedAnswer === currentQuestion.correctAnswer;
+
+  const progress =
+    ((currentIndex + 1) / quiz.length) * 100;
+
+  return (
+    <section
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "22px",
+      }}
+    >
+      {/* Header */}
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "12px",
+        }}
+      >
+        <div>
+          <h2
+            style={{
+              margin: 0,
+              color: "#0f172a",
+            }}
+          >
+            Quiz
+          </h2>
+
+          <p
+            style={{
+              margin: "6px 0 0",
+              color: "#64748b",
+            }}
+          >
+            Question {currentIndex + 1} of {quiz.length}
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            color: "#2563eb",
+            fontWeight: 700,
+          }}
+        >
+          <Trophy size={20} />
+          Study Mode
+        </div>
+      </div>
+
+      {/* Progress */}
+
+      <div
+        style={{
+          width: "100%",
+          height: 10,
+          background: "#e2e8f0",
+          borderRadius: 100,
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            width: `${progress}%`,
+            height: "100%",
+            background: "#2563eb",
+            transition: ".3s",
+          }}
+        />
+      </div>
+
+      {/* Question */}
+
+      <div
+        style={{
+          background: "#ffffff",
+          borderRadius: 18,
+          padding: "24px",
+          boxShadow: "0 6px 20px rgba(0,0,0,.08)",
+        }}
+      >
+        <h3
+          style={{
+            marginTop: 0,
+            color: "#0f172a",
+            lineHeight: 1.6,
+          }}
+        >
+          {currentQuestion.question}
+        </h3>
+
+        <div
+          style={{
+            display: "grid",
+            gap: 14,
+            marginTop: 25,
+          }}
+        >
+          {currentQuestion.options.map((option) => {
+            const isCorrect =
+              option === currentQuestion.correctAnswer;
+
+            const isSelected =
+              option === selectedAnswer;
+
+            let background = "#ffffff";
+            let border = "2px solid #cbd5e1";
+
+            if (answered) {
+              if (isCorrect) {
+                background = "#dcfce7";
+                border = "2px solid #16a34a";
+              } else if (isSelected) {
+                background = "#fee2e2";
+                border = "2px solid #dc2626";
+              }
+            }
+
+            return (
+              <button
+                key={option}
+                disabled={answered}
+                onClick={() => onSelect(option)}
+                style={{
+                  padding: "16px",
+                  borderRadius: 14,
+                  border,
+                  background,
+                  cursor: answered
+                    ? "default"
+                    : "pointer",
+                  textAlign: "left",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  transition: ".25s",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {option}
+
+                {answered && isCorrect && (
+                  <CheckCircle2
+                    color="#16a34a"
+                    size={20}
+                  />
+                )}
+
+                {answered &&
+                  isSelected &&
+                  !isCorrect && (
+                    <XCircle
+                      color="#dc2626"
+                      size={20}
+                    />
+                  )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Result */}
+
+        {answered && (
+          <div
+            style={{
+              marginTop: 24,
+              padding: 18,
+              borderRadius: 14,
+              background: correct
+                ? "#dcfce7"
+                : "#fee2e2",
+            }}
+          >
+            <strong>
+              {correct
+                ? "✅ Correct!"
+                : "❌ Incorrect"}
+            </strong>
+
+            {!correct && (
+              <p
+                style={{
+                  marginTop: 10,
+                  marginBottom: 0,
+                }}
+              >
+                Correct Answer:
+                <strong>
+                  {" "}
+                  {currentQuestion.correctAnswer}
+                </strong>
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Navigation */}
+
+      <div
+        style={{
+          display: "flex",
+          gap: 18,
+        }}
+      >
+        <button
+          onClick={onPrevious}
+          style={{
+            flex: 1,
+            padding: 14,
+            borderRadius: 12,
+            border: "none",
+            background: "#e2e8f0",
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 8,
+            fontWeight: 600,
+          }}
+        >
+          <ChevronLeft size={18} />
+          Previous
+        </button>
+
+        <button
+          onClick={onNext}
+          style={{
+            flex: 1,
+            padding: 14,
+            borderRadius: 12,
+            border: "none",
+            background: "#2563eb",
+            color: "#fff",
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 8,
+            fontWeight: 600,
+          }}
+        >
+          Next
+          <ChevronRight size={18} />
+        </button>
+      </div>
+    </section>
+  );
+}

@@ -28,8 +28,12 @@ export default function Navbar({
         top: 0,
         zIndex: 100,
         width: "100%",
-        background,
+        background: darkMode ? "rgba(15, 23, 42, 0.95)" : "rgba(255, 255, 255, 0.9)",
         borderBottom: `1px solid ${border}`,
+        boxShadow: darkMode
+          ? "0 8px 30px rgba(2, 6, 23, 0.26)"
+          : "0 8px 24px rgba(15, 23, 42, 0.06)",
+        backdropFilter: "blur(16px)",
         transition: "all .3s ease",
       }}
     >

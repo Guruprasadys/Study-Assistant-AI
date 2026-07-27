@@ -38,8 +38,11 @@ export default function FlashCard({
           width: "100%",
           minHeight: 320,
           transformStyle: "preserve-3d",
-          transition: "transform .6s ease",
+          transition: "transform .6s ease, box-shadow .3s ease",
           transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          boxShadow: darkMode
+            ? "0 18px 40px rgba(2, 6, 23, 0.28)"
+            : "0 18px 40px rgba(15, 23, 42, 0.09)",
         }}
       >
         {/* FRONT */}

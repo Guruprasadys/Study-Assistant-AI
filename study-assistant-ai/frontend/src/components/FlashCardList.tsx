@@ -47,6 +47,17 @@ export default function FlashCardList({
         display: "flex",
         flexDirection: "column",
         gap: "24px",
+        padding: "24px",
+        borderRadius: 24,
+        background: darkMode
+          ? "rgba(15, 23, 42, 0.65)"
+          : "rgba(255, 255, 255, 0.92)",
+        border: darkMode
+          ? "1px solid rgba(148, 163, 184, 0.16)"
+          : "1px solid rgba(226, 232, 240, 0.95)",
+        boxShadow: darkMode
+          ? "0 18px 38px rgba(2, 6, 23, 0.2)"
+          : "0 18px 38px rgba(15, 23, 42, 0.08)",
       }}
     >
       {/* Header */}

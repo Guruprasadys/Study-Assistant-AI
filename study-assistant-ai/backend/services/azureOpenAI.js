@@ -10,8 +10,7 @@ dotenv.config();
 const endpoint = process.env.AZURE_OPENAI_ENDPOINT;
 const apiKey = process.env.AZURE_OPENAI_API_KEY;
 const deployment = process.env.AZURE_OPENAI_DEPLOYMENT;
-const apiVersion =
-  process.env.AZURE_OPENAI_API_VERSION || "2024-10-21";
+const apiVersion = process.env.AZURE_OPENAI_API_VERSION || "2024-10-21";
 
 if (!endpoint) {
   throw new Error("AZURE_OPENAI_ENDPOINT is missing.");

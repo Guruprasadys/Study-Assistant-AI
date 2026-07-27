@@ -34,11 +34,16 @@ export default function Loading({
       style={{
         marginTop: "2rem",
         padding: "2rem",
-        borderRadius: 20,
-        background: darkMode ? "#1e293b" : "#ffffff",
+        borderRadius: 24,
+        background: darkMode
+          ? "linear-gradient(145deg, #1e293b 0%, #111827 100%)"
+          : "linear-gradient(145deg, #ffffff 0%, #f8fbff 100%)",
+        border: darkMode
+          ? "1px solid rgba(148, 163, 184, 0.18)"
+          : "1px solid rgba(226, 232, 240, 0.95)",
         boxShadow: darkMode
-          ? "0 8px 25px rgba(0,0,0,.35)"
-          : "0 8px 25px rgba(0,0,0,.08)",
+          ? "0 12px 36px rgba(2, 6, 23, 0.32)"
+          : "0 12px 30px rgba(15, 23, 42, 0.08)",
         transition: ".3s",
       }}
     >

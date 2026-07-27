@@ -53,15 +53,20 @@ export default function PromptInput({
     <form
       onSubmit={handleSubmit}
       style={{
-        background: darkMode ? "#1e293b" : "#ffffff",
-        borderRadius: 20,
+        background: darkMode
+          ? "linear-gradient(145deg, #1e293b 0%, #111827 100%)"
+          : "linear-gradient(145deg, #ffffff 0%, #f8fbff 100%)",
+        borderRadius: 24,
         padding: 28,
         display: "flex",
         flexDirection: "column",
         gap: 20,
+        border: darkMode
+          ? "1px solid rgba(148, 163, 184, 0.18)"
+          : "1px solid rgba(226, 232, 240, 0.95)",
         boxShadow: darkMode
-          ? "0 8px 30px rgba(0,0,0,.35)"
-          : "0 8px 25px rgba(0,0,0,.08)",
+          ? "0 12px 36px rgba(2, 6, 23, 0.32)"
+          : "0 12px 30px rgba(15, 23, 42, 0.08)",
         transition: ".3s",
       }}
     >
@@ -116,6 +121,9 @@ export default function PromptInput({
           border: darkMode
             ? "2px solid #475569"
             : "2px solid #cbd5e1",
+          boxShadow: darkMode
+            ? "inset 0 0 0 1px rgba(96, 165, 250, 0.2)"
+            : "inset 0 0 0 1px rgba(37, 99, 235, 0.08)",
           background: darkMode
             ? "#0f172a"
             : "#ffffff",
@@ -183,7 +191,7 @@ export default function PromptInput({
             loading ||
             value.trim().length === 0
               ? "#94a3b8"
-              : "#2563eb",
+              : "linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)",
           color: "#ffffff",
           display: "flex",
           alignItems: "center",
@@ -191,6 +199,14 @@ export default function PromptInput({
           gap: 10,
           fontWeight: 700,
           fontSize: "1rem",
+          boxShadow:
+            loading || value.trim().length === 0
+              ? "none"
+              : "0 10px 24px rgba(37, 99, 235, 0.24)",
+          transform:
+            loading || value.trim().length === 0
+              ? "none"
+              : "translateY(-1px)",
           transition: ".3s",
         }}
       >

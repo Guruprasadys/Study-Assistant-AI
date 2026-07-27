@@ -9,6 +9,7 @@ interface Props {
 export default function ErrorCard({
   error,
   onRetry,
+  darkMode,
 }: Props) {
   return (
     <div
@@ -16,10 +17,16 @@ export default function ErrorCard({
       style={{
         marginTop: "2rem",
         padding: "24px",
-        borderRadius: "18px",
-        background: "#fef2f2",
-        border: "1px solid #fecaca",
-        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
+        borderRadius: "20px",
+        background: darkMode
+          ? "linear-gradient(145deg, #1f2937 0%, #111827 100%)"
+          : "linear-gradient(145deg, #fef2f2 0%, #fff7ed 100%)",
+        border: darkMode
+          ? "1px solid rgba(248, 113, 113, 0.2)"
+          : "1px solid #fecaca",
+        boxShadow: darkMode
+          ? "0 12px 30px rgba(2, 6, 23, 0.28)"
+          : "0 10px 24px rgba(15, 23, 42, 0.08)",
       }}
     >
       {/* Header */}
@@ -41,7 +48,7 @@ export default function ErrorCard({
           <h2
             style={{
               margin: 0,
-              color: "#991b1b",
+              color: darkMode ? "#fca5a5" : "#991b1b",
             }}
           >
             Something went wrong
@@ -50,7 +57,7 @@ export default function ErrorCard({
           <p
             style={{
               margin: "4px 0 0",
-              color: "#7f1d1d",
+              color: darkMode ? "#fecaca" : "#7f1d1d",
             }}
           >
             The study set could not be generated.
@@ -62,7 +69,7 @@ export default function ErrorCard({
 
       <div
         style={{
-          background: "#ffffff",
+          background: darkMode ? "rgba(15, 23, 42, 0.7)" : "#ffffff",
           borderRadius: "12px",
           padding: "16px",
           border: "1px solid #fecaca",
@@ -74,7 +81,7 @@ export default function ErrorCard({
         <p
           style={{
             marginTop: "10px",
-            color: "#444",
+            color: darkMode ? "#e2e8f0" : "#444",
             wordBreak: "break-word",
             lineHeight: 1.6,
           }}

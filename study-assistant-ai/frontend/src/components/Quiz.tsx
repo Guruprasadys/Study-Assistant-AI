@@ -174,20 +174,21 @@ const correct =
 
             const isSelected =
               option === selectedAnswer;
+let background = darkMode ? "#1f2937" : "#ffffff";
+let border = darkMode ? "2px solid #475569" : "2px solid #cbd5e1";
+let textColor = darkMode ? "#f8fafc" : "#0f172a";
 
-            let background = darkMode ? "#1f2937" : "#ffffff";
-            let border = darkMode ? "2px solid #475569" : "2px solid #cbd5e1";
-
-            if (answered) {
-              if (isCorrect) {
-                background = "#dcfce7";
-                border = "2px solid #16a34a";
-              } else if (isSelected) {
-                background = "#fee2e2";
-                border = "2px solid #dc2626";
-              }
-            }
-
+if (answered) {
+  if (isCorrect) {
+    background = "#dcfce7";
+    border = "2px solid #16a34a";
+    textColor = "#166534"; // dark green text
+  } else if (isSelected) {
+    background = "#fee2e2";
+    border = "2px solid #dc2626";
+    textColor = "#991b1b"; // dark red text
+  }
+}
             return (
               <button
                 key={option}
@@ -208,7 +209,7 @@ const correct =
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  color: darkMode ? "#f8fafc" : "#0f172a",
+                  color: textColor,
                 }}
               >
                 {option}

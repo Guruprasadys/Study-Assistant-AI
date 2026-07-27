@@ -33,12 +33,25 @@ export default function Quiz({
 }: Props) {
   if (!quiz.length) return null;
 
-  const currentQuestion = quiz[currentIndex];
+const currentQuestion = quiz[currentIndex];
 
+if (!currentQuestion) {
+  return (
+    <div
+      style={{
+        padding: 40,
+        textAlign: "center",
+      }}
+    >
+      <h2>No Question Available</h2>
+    </div>
+  );
+}
   const answered = selectedAnswer !== "";
 
-  const correct =
-    selectedAnswer === currentQuestion.correctAnswer;
+const correct =
+  currentQuestion &&
+  selectedAnswer === currentQuestion.correctAnswer;
 
   const progress =
     ((currentIndex + 1) / quiz.length) * 100;

@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
-
+import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import PromptInput from "./components/PromptInput";
 import FlashCardList from "./components/FlashCardList";
@@ -18,7 +18,15 @@ export default function App() {
   const [studySet, setStudySet] = useState<StudySet | null>(null);
 
   const [prompt, setPrompt] = useState("");
+const [reviewMode, setReviewMode] = useState(false);
 
+const [quizFinished, setQuizFinished] = useState(false);
+
+const [reviewFinished, setReviewFinished] = useState(false);
+
+const [score, setScore] = useState(0);
+
+const [reviewScore, setReviewScore] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
@@ -39,18 +47,39 @@ export default function App() {
 
   const currentCard = studySet?.flashcards[cardIndex];
 
-  const activeQuiz = useMemo(() => {
-    if (!studySet) return [];
+const activeQuiz = useMemo(() => {
+  if (!studySet) return [];
 
-    return wrongAnswers.length > 0
-      ? studySet.quiz.filter((q) =>
-          wrongAnswers.includes(q.correctAnswer)
-        )
-      : studySet.quiz;
-  }, [studySet, wrongAnswers]);
+  if (!reviewMode) return studySet.quiz;
+
+  return studySet.quiz.filter((q) =>
+    wrongAnswers.includes(q.question)
+  );
+}, [studySet, reviewMode, wrongAnswers]);
+  useEffect(() => {
+  if (quizIndex >= activeQuiz.length) {
+    setQuizIndex(0);
+  }
+}, [activeQuiz, quizIndex]);
 
   const currentQuiz = activeQuiz[quizIndex];
+function startReview() {
+  setReviewMode(true);
+  setQuizFinished(false);
+  setQuizIndex(0);
+  setSelectedAnswer("");
+}
 
+function resetQuiz() {
+  setQuizFinished(false);
+  setReviewFinished(false);
+  setReviewMode(false);
+  setQuizIndex(0);
+  setSelectedAnswer("");
+  setWrongAnswers([]);
+  setScore(0);
+  setReviewScore(0);
+}
   const progress =
     activeQuiz.length === 0
       ? 0
@@ -76,6 +105,11 @@ export default function App() {
     setSelectedAnswer("");
 
     setWrongAnswers([]);
+    setScore(0);
+setReviewScore(0);
+setReviewMode(false);
+setQuizFinished(false);
+setReviewFinished(false);
 
     try {
   const response = await generateStudySet(promptText);
@@ -125,29 +159,43 @@ export default function App() {
   }
 
   function handleAnswer(answer: string) {
-    if (!currentQuiz) return;
+  if (!currentQuiz) return;
 
-    setSelectedAnswer(answer);
+  setSelectedAnswer(answer);
 
-    if (answer !== currentQuiz.correctAnswer) {
+  if (answer === currentQuiz.correctAnswer) {
+    if (reviewMode) {
+      setReviewScore((prev) => prev + 1);
+    } else {
+      setScore((prev) => prev + 1);
+    }
+  } else {
+    if (!reviewMode) {
       setWrongAnswers((prev) =>
-        prev.includes(currentQuiz.correctAnswer)
+        prev.includes(currentQuiz.question)
           ? prev
-          : [...prev, currentQuiz.correctAnswer]
+          : [...prev, currentQuiz.question]
       );
     }
   }
+}
 
-  function nextQuestion() {
-    if (!activeQuiz.length) return;
+ function nextQuestion() {
+  if (!activeQuiz.length) return;
 
-    setQuizIndex((prev) =>
-      prev === activeQuiz.length - 1 ? 0 : prev + 1
-    );
-
+  if (quizIndex < activeQuiz.length - 1) {
+    setQuizIndex((prev) => prev + 1);
     setSelectedAnswer("");
+    return;
   }
 
+  if (!reviewMode) {
+    setQuizFinished(true);
+    return;
+  }
+
+  setReviewFinished(true);
+}
   function previousQuestion() {
     if (!activeQuiz.length) return;
 
@@ -329,7 +377,7 @@ export default function App() {
           />
         )}
 
-        {studySet && (
+       {studySet && !quizFinished && !reviewFinished && (
           <>
             <FlashCardList
               cards={studySet.flashcards}
@@ -365,6 +413,40 @@ export default function App() {
             />
           </>
         )}
+        {studySet && quizFinished && (
+  <div style={{ textAlign: "center", padding: 40 }}>
+    <h1>🎉 Quiz Completed</h1>
+
+    <h2>
+      Score: {score} / {studySet.quiz.length}
+    </h2>
+
+    <p>Wrong Answers: {wrongAnswers.length}</p>
+
+    {wrongAnswers.length > 0 ? (
+      <button onClick={startReview}>
+        Retry Wrong Questions
+      </button>
+    ) : (
+      <button onClick={resetQuiz}>
+        Start Again
+      </button>
+    )}
+  </div>
+)}
+{studySet && reviewFinished && (
+  <div style={{ textAlign: "center", padding: 40 }}>
+    <h1>🎉 Review Completed</h1>
+
+    <h2>
+      Review Score: {reviewScore} / {wrongAnswers.length}
+    </h2>
+
+    <button onClick={resetQuiz}>
+      Start Again
+    </button>
+  </div>
+)}
       </main>
     </div>
   );

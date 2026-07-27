@@ -348,41 +348,6 @@ The application handles:
 
 ---
 
-# Time Spent
-
-Project Planning
-
-2 hours
-
-Frontend Development
-
-8 hours
-
-Backend Development
-
-6 hours
-
-Azure OpenAI Integration
-
-4 hours
-
-Testing and Debugging
-
-5 hours
-
-UI Improvements
-
-3 hours
-
-Documentation
-
-2 hours
-
-Total
-
-Approximately 30 hours
-
----
 
 # Author
 
